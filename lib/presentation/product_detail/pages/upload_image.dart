@@ -17,7 +17,11 @@ class _DemoUploadImageState extends State<DemoUploadImage> {
 
   File _image;
   final picker = ImagePicker();
-  TextEditingController nameController = TextEditingController();
+  TextEditingController merkController = TextEditingController();
+  TextEditingController modelController = TextEditingController();
+  TextEditingController typeController = TextEditingController();
+  TextEditingController bahan_bakarController = TextEditingController();
+  TextEditingController transmisiController = TextEditingController();
   TextEditingController descController = TextEditingController();
 
 
@@ -31,7 +35,11 @@ class _DemoUploadImageState extends State<DemoUploadImage> {
   Future uploadImage()async{
     final uri = Uri.parse("http://192.168.43.212/image_upload_php_mysql/upload.php");
     var request = http.MultipartRequest('POST',uri);
-    request.fields['name'] = nameController.text;
+    request.fields['merk'] = merkController.text;
+    request.fields['model'] = modelController.text;
+    request.fields['type'] = typeController.text;
+    request.fields['bahan_bakar'] = bahan_bakarController.text;
+    request.fields['transmisi'] = transmisiController.text;
     request.fields['description'] = descController.text;
     var pic = await http.MultipartFile.fromPath("image", _image.path);
     request.files.add(pic);
@@ -48,7 +56,7 @@ class _DemoUploadImageState extends State<DemoUploadImage> {
   }
 
   String _mySelection;
-  List<Map> _myJson = [{"id":0,"name":"<New>"},{"id":1,"name":"Test Practice"}];
+  List<Map> _myJson = [{"id":0,"merk":"<New>"},{"id":1,"merk":"Test Practice"}];
 
 
   @override
@@ -63,8 +71,36 @@ class _DemoUploadImageState extends State<DemoUploadImage> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
-                controller: nameController,
-                decoration: InputDecoration(labelText: 'Name'),
+                controller: merkController,
+                decoration: InputDecoration(labelText: 'Merk'),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                controller: modelController,
+                decoration: InputDecoration(labelText: 'Model'),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                controller: typeController,
+                decoration: InputDecoration(labelText: 'Type'),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                controller: bahan_bakarController,
+                decoration: InputDecoration(labelText: 'Bahan Bakar'),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                controller: transmisiController,
+                decoration: InputDecoration(labelText: 'Transmisi'),
               ),
             ),
             Padding(
@@ -111,7 +147,7 @@ class _DemoUploadImageState extends State<DemoUploadImage> {
                   return new DropdownMenuItem(
                     value: map["id"].toString(),
                     child: new Text(
-                      map["name"],
+                      map["merk"],
                     ),
                   );
                 }).toList(),
